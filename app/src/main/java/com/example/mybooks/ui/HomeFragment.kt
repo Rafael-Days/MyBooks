@@ -16,13 +16,9 @@ import com.example.mybooks.viewmodels.HomeViewModel
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
 
-    private val homeViewModel: HomeViewModel by viewModels()
-
     private val viewModel: HomeViewModel by viewModels()
-
     private val adapter: BookAdapter = BookAdapter()
 
     override fun onCreateView(
