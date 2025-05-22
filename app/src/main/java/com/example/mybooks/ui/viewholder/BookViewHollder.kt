@@ -1,16 +1,24 @@
-package com.example.mybooks.ui.viewhollder
+package com.example.mybooks.ui.viewholder
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybooks.R
 import com.example.mybooks.databinding.ItemBookBinding
 import com.example.mybooks.entity.BookEntity
+import com.example.mybooks.ui.listener.BookListener
 
-class BookViewHollder(private val item:ItemBookBinding):RecyclerView.ViewHolder(item.root) {
+class BookViewHollder(private val item:ItemBookBinding, private val listener: BookListener)
+    :RecyclerView.ViewHolder(item.root) {
 
     fun bind(book: BookEntity){
         item.textviewTitle.text = book.titlle
+        //item.layoutItemBook.id = book.id
         item.textviewAuthor.text = book.author
         item.textviewGenre.text = book.genre
+
+        item.textviewTitle.setOnClickListener { listener.onClick(book.id) }
+        //item.layoutItemBook.setOnClickListener { listener.onClick(book.id) }
+        //quando clica na linha do livro, e não apenas no titulo do livro
 
         updateFavoriteIcon(book.favorite)
         setGenreBackground(book.genre)
@@ -36,4 +44,5 @@ class BookViewHollder(private val item:ItemBookBinding):RecyclerView.ViewHolder(
             }
         }
     }
+
 }
