@@ -10,8 +10,6 @@ class DetailsViewModel : ViewModel() {
 
     private val repository: BookRepository = BookRepository()
 
-    setObservers()
-
     private val _book = MutableLiveData<BookEntity>()
     val book: LiveData<BookEntity> = _book
 
@@ -19,7 +17,4 @@ class DetailsViewModel : ViewModel() {
         _book.value = repository.getBookByID(id)
     }
 
-    private fun setObservers(){
-        viewModel.book.observe()//entender o erro
-    }
 }
