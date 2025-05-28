@@ -13,8 +13,19 @@ class DetailsViewModel : ViewModel() {
     private val _book = MutableLiveData<BookEntity>()
     val book: LiveData<BookEntity> = _book
 
+    private val _bookRemoval = MutableLiveData<Boolean>()
+    val bookRemoval: LiveData<Boolean> = _bookRemoval
+
     fun getBookById(id: Int){
         _book.value = repository.getBookByID(id)
+    }
+
+    fun deleteBook(id: Int){
+        _bookRemoval.value = repository.deleteBook(id)
+    }
+
+    fun favorite(id: Int){
+        repository.toggleFavoriteStatus(id)
     }
 
 }
