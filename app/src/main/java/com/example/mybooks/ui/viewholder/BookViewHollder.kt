@@ -11,7 +11,7 @@ class BookViewHollder(private val item:ItemBookBinding, private val listener: Bo
     :RecyclerView.ViewHolder(item.root) {
 
     fun bind(book: BookEntity){
-        item.textviewTitle.text = book.titlle
+        item.textviewTitle.text = book.tittle
         //item.layoutItemBook.id = book.id
         item.textviewAuthor.text = book.author
         item.textviewGenre.text = book.genre
@@ -20,8 +20,10 @@ class BookViewHollder(private val item:ItemBookBinding, private val listener: Bo
         //item.layoutItemBook.setOnClickListener { listener.onClick(book.id) }
         //quando clica na linha do livro, e não apenas no titulo do livro
 
-        updateFavoriteIcon(book.favorite)
+        item.imageviewFavorite.setOnClickListener { listener.onFavoriteClick(book.id) }
+
         setGenreBackground(book.genre)
+        updateFavoriteIcon(book.favorite)
     }
 
     private fun updateFavoriteIcon(favorite: Boolean){

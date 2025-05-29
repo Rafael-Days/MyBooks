@@ -2,7 +2,7 @@ package com.example.mybooks.repository
 
 import com.example.mybooks.entity.BookEntity
 
-class BookRepository {
+class BookRepository private constructor() {
 
     private val books = mutableListOf<BookEntity>()
 
@@ -10,8 +10,23 @@ class BookRepository {
         books.addAll(getInitialBooks())
     }
 
-    private fun getInitialBooks(): List<BookEntity>{
-        return listOf(BookEntity(1, "To Kill a Mockingbird", "Harper Lee", true, "Ficção"),
+    companion object {
+        private lateinit var instance: BookRepository
+
+        fun getInstance(): BookRepository {
+            synchronized(this) {
+                if (!::instance.isInitialized) {
+                    instance = BookRepository()
+                }
+            }
+            return instance
+        }
+
+    }
+
+    private fun getInitialBooks(): List<BookEntity> {
+        return listOf(
+            BookEntity(1, "To Kill a Mockingbird", "Harper Lee", true, "Ficção"),
             BookEntity(2, "Dom Casmurro", "Machado de Assis", false, "Romance"),
             BookEntity(3, "O Hobbit", "J.R.R. Tolkien", true, "Fantasia"),
             BookEntity(4, "Cem Anos de Solidão", "Gabriel García Márquez", false, "Romance"),
@@ -30,29 +45,31 @@ class BookRepository {
             BookEntity(17, "Moby Dick", "Herman Melville", true, "Aventura"),
             BookEntity(18, "O Nome do Vento", "Patrick Rothfuss", true, "Fantasia"),
             BookEntity(19, "O Conde de Monte Cristo", "Alexandre Dumas", true, "Aventura"),
-            BookEntity(20, "Os Miseráveis", "Victor Hugo", false, "Romance"))
+            BookEntity(20, "Os Miseráveis", "Victor Hugo", false, "Romance")
+        )
     }
 
-    fun getAllBooks():List<BookEntity>{
+    fun getAllBooks(): List<BookEntity> {
         return books
     }
 
-    fun getFavoriteBooks():List<BookEntity>{
+    fun getFavoriteBooks(): List<BookEntity> {
         return books.filter { it.favorite }
     }
 
-    fun getBookByID(id: Int):BookEntity?{
+    fun getBookByID(id: Int): BookEntity? {
         return books.find { it.id == id }
     }
 
-    fun deleteBook(id: Int): Boolean{
-        return books.removeIf{it.id == id}
-    }
-
-    fun toggleFavoriteStatus(id: Int){
+    fun toggleFavoriteStatus(id: Int) {
         val book = books.find { it.id == id }
-        if(book != null){
+        if (book != null) {
             book.favorite = !book.favorite
         }
     }
+
+    fun deleteBook(id: Int): Boolean {
+        return books.removeIf { it.id == id }
+    }
+
 }

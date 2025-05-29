@@ -1,6 +1,5 @@
 package com.example.mybooks.ui
 
-import android.content.DialogInterface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -58,7 +57,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun handleRemove() {
-        var builder = AlertDialog.Builder(requireContext())
+        val builder = AlertDialog.Builder(requireContext())
         builder.setMessage(getString(R.string.dialog_message_delete_item))
             .setPositiveButton(R.string.dialog_positive_button_yes) { dialog, which ->
                 viewModel.deleteBook(bookId)
@@ -71,7 +70,7 @@ class DetailsFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.book.observe(viewLifecycleOwner) {
-            binding.textviewTitleDetails.text = it.titlle
+            binding.textviewTitleDetails.text = it.tittle
             binding.textviewAuthorValue.text = it.author
             binding.textviewGenreValue.text = it.genre
             binding.checkboxFavorite.isChecked = it.favorite

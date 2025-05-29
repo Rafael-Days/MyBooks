@@ -31,15 +31,18 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.recyclerviewBooks.layoutManager = LinearLayoutManager(context)
-
         binding.recyclerviewBooks.adapter = adapter
-        viewModel.getAllBooks()
 
         attachListener()
 
         setObservers()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllBooks()
     }
 
     override fun onDestroyView() {
@@ -57,6 +60,10 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.navigation_details, bundle)
             }
 
+            override fun onFavoriteClick(id: Int) {
+                viewModel.favorite(id)
+                viewModel.getAllBooks()
+            } 
         })
     }
 
